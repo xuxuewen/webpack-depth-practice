@@ -1,0 +1,30 @@
+{
+  "name": "webpack-depth-practice",
+  "version": "1.0.0",
+  "description": "webpack-depth-practice",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xuxuewen/webpack-depth-practice.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xuxuewen/webpack-depth-practice/issues"
+  },
+  "homepage": "https://github.com/xuxuewen/webpack-depth-practice#readme",
+  "devDependencies": {
+    "browser-sync": "^2.26.3",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.2.1"
+  },
+  "dependencies": {
+    "echarts": "^4.1.0",
+    "lodash": "^4.17.11"
+  }
+}
