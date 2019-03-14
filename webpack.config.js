@@ -2,6 +2,7 @@ const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+const PreloadWebpackPlugin = require('preload-webpack-plugin');
 
 module.exports = {
   entry:'./src/index.js',
@@ -21,16 +22,21 @@ module.exports = {
     new HtmlWebpackPlugin({
       template:'./src/index.html'
     }),
+    new PreloadWebpackPlugin({
+      rel: 'prefetch',
+      as: 'script',
+      include: ['corelib','runtime']
+    }),
     new webpack.HashedModuleIdsPlugin()
   ],
   module:{
     noParse:/lodash/
   },
   optimization:{
-    // runtimeChunk:{
-    //   name: 'runtime'
-    //   // name: entrypoint => `runtimechunk~${entrypoint.name}`
-    // },
+    runtimeChunk:{
+      name: 'runtime'
+      // name: entrypoint => `runtimechunk~${entrypoint.name}`
+    },
     splitChunks:{
       chunks: 'all',
       minSize: 30*1024, // 这是每个chunk的最小 KiB
@@ -42,20 +48,20 @@ module.exports = {
       name: true,
       cacheGroups:{
         // 分离出 react、react-dom
-        reactlib:{
+        corelib:{
           test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
-          name: 'reactlib',
+          minSize:0,
+          name: 'corelib',
           chunks: 'all',
-          priority:20,
-          enforce: true
+          priority:20
+          // enforce:true
         },
         // 分离出其他的 node_module 包
         nodemou:{
           test: /[\\/]node_modules[\\/]/,
           name: 'nodemou',
           chunks: 'all',
-          priority:10,
-          enforce: true
+          priority:10
         },
         // 抽离公用包,最小chunk，是1，超过大小 1.6KB
         commons:{
@@ -68,5 +74,8 @@ module.exports = {
       }
     }
   },
-  devtool:'source-map'
+  // devServer:{
+  //   contentBase: path.join(__dirname, 'public')
+  // }
+  // devtool:'source-map'
 }
